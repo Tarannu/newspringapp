@@ -1,6 +1,12 @@
 package guru.springframework.domain;
 
+import javax.persistence.*;
+
+@Entity //this is creating this class as an entity
 public class Recipe {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
     private String description;
     private Integer prepTime;
     private Integer cookTime;
@@ -8,6 +14,7 @@ public class Recipe {
     private String source;
     private String url;
     private Byte[] image;
+    @OneToOne(cascade = CascadeType.ALL) //this sets the recipe as the parent
     private Notes notes;
 
     public String getDescription() {
