@@ -16,6 +16,8 @@ public class Recipe {
     private String url;
     @Lob
     private Byte[] image;
+    @Enumerated(EnumType.STRING)
+    private Difficulty difficulty;
     @OneToOne(cascade = CascadeType.ALL) //this sets the recipe as the parent
     private Notes notes;
 
