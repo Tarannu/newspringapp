@@ -18,6 +18,23 @@ public class Recipe {
     private Byte[] image;
     @OneToOne(cascade = CascadeType.ALL) //this sets the recipe as the parent
     private Notes notes;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public Set<Ingredient> getIngredient() {
+        return ingredient;
+    }
+
+    public void setIngredient(Set<Ingredient> ingredient) {
+        this.ingredient = ingredient;
+    }
+
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "recipe")
     private Set<Ingredient> ingredient;
 
