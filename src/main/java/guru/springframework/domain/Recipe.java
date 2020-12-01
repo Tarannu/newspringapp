@@ -1,6 +1,7 @@
 package guru.springframework.domain;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity //this is creating this class as an entity
 public class Recipe {
@@ -13,9 +14,12 @@ public class Recipe {
     private Integer servings;
     private String source;
     private String url;
+    @Lob
     private Byte[] image;
     @OneToOne(cascade = CascadeType.ALL) //this sets the recipe as the parent
     private Notes notes;
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "recipe")
+    private Set<Ingredient> ingredient;
 
     public String getDescription() {
         return description;
