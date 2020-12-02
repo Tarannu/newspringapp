@@ -1,6 +1,7 @@
 package guru.springframework.domain;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity //this is creating this class as an entity
@@ -15,12 +16,19 @@ public class Recipe {
     private String source;
     private String url;
     @Lob
+    private String directions;
+    @Lob
     private Byte[] image;
     @Enumerated(EnumType.STRING)
     private Difficulty difficulty;
     @OneToOne(cascade = CascadeType.ALL) //this sets the recipe as the parent
     private Notes notes;
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "recipe")
+    private Set<Ingredient> ingredient=new HashSet<>();
 
+    @ManyToMany
+    @JoinTable(name = "recipe_category", joinColumns = @JoinColumn(name="recipe_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
+    private Set<Category> categories;
     public long getId() {
         return id;
     }
@@ -28,6 +36,7 @@ public class Recipe {
     public void setId(long id) {
         this.id = id;
     }
+
 
     public Set<Ingredient> getIngredient() {
         return ingredient;
@@ -37,8 +46,6 @@ public class Recipe {
         this.ingredient = ingredient;
     }
 
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "recipe")
-    private Set<Ingredient> ingredient;
 
     public String getDescription() {
         return description;
@@ -102,5 +109,21 @@ public class Recipe {
 
     public void setNotes(Notes notes) {
         this.notes = notes;
+    }
+
+    public Difficulty getDifficulty() {
+        return difficulty;
+    }
+
+    public void setDifficulty(Difficulty difficulty) {
+        this.difficulty = difficulty;
+    }
+
+    public Set<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(Set<Category> categories) {
+        this.categories = categories;
     }
 }
